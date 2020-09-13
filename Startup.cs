@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CS201_WebApi.Extensions;
+using CS201_WebApi.Features.Todo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,10 +29,20 @@ namespace CS201_WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(typeof(TodoService));
+            services.AddTransient(typeof(TodoContext));
+
             services.AddControllers(options => 
             {
                 options.Conventions.Add(new KebabCaseRoutesConvention());
             });
+
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
+            { 
+                Title = "CS201 WebApi", 
+                Version = "v1",
+                Description = "Simple example of an WebApi created with ASP.NET Core"
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +62,12 @@ namespace CS201_WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CS201 WebApi V1");
             });
         }
     }

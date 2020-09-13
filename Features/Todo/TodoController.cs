@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,23 +12,32 @@ namespace CS201_WebApi.Features.Todo
     public class TodoController : ControllerBase
     {
         private readonly ILogger<TodoController> _logger;
+        private readonly TodoService _todoService;
 
-        public TodoController(ILogger<TodoController> logger)
+        public TodoController(ILogger<TodoController> logger, TodoService todoService)
         {
             _logger = logger;
+            _todoService = todoService;
         }
 
         [HttpGet]
-        public IEnumerable<Todo> GetAll()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Todo
-            {
-                Id = index,
-                CreateDate = DateTime.Now.AddDays(index),
-                Title = "teste"
-            })
-            .ToArray();
-        }
+        public async Task<IEnumerable<Todo>> GetAll() => await _todoService.GetAllTodos();
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<Todo> Get([FromRoute] int id) => await _todoService.GetTodo(id);
+
+        [HttpPost]
+        public async Task<Todo> Insert([FromBody] TodoDTO todoDto) => 
+            await _todoService.InsertTodo(todoDto);
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<Todo> Update([FromRoute] int id, [FromBody] TodoDTO todoDto) => 
+            await _todoService.UpdateTodo(id, todoDto);
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task Delete([FromRoute] int id) => await _todoService.DeleteTodo(id);
     }
 }
