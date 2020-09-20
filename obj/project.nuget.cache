@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GTeiGTaivzoHFaYmJEdYo9+4nlV5Vx1pjpSUWWa8vT+aezasffshdGLtlwTMpet0qzJhV+HdLfVrGocP72qgKg==",
+  "dgSpecHash": "1PssYCFy7JizabwT1vY2BPdJMi7TpQ7q+F40glxSHPetnrDQuOJjY6rFNv51MAD344lgAtctUZd0xFtbmSTxgg==",
   "success": true,
   "projectFilePath": "C:\\Users\\igorc\\Repos\\CS201_WebApi\\CS201_WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\igorc\\.nuget\\packages\\flurl\\2.8.2\\flurl.2.8.2.nupkg.sha512",
     "C:\\Users\\igorc\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\igorc\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\igorc\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

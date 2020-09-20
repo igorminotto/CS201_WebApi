@@ -1,5 +1,3 @@
-using System;
-
 namespace CS201_WebApi.Features.Todo
 {
     public class TodoDTO

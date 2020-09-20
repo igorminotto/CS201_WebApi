@@ -1,14 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using CS201_WebApi.Infra.Database;
 
 namespace CS201_WebApi.Features.Todo
 {
-    public class Todo
+    public class Todo : Entity
     {
-        public int Id { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
         [Required]
         public string Title { get; set; }
 
@@ -20,10 +17,7 @@ namespace CS201_WebApi.Features.Todo
 
         public static Todo FromDTO(TodoDTO todoDTO)
         {
-            var todo = new Todo 
-            {
-                CreateDate = DateTime.Now
-            };
+            var todo = new Todo();
             todo.UpdateFields(todoDTO);
 
             return todo;
