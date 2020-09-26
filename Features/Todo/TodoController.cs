@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -34,6 +34,16 @@ namespace CS201_WebApi.Features.Todo
         [Route("{id:int}")]
         public async Task<Todo> Update([FromRoute] int id, [FromBody] TodoDTO todoDto) => 
             await _todoService.UpdateTodo(id, todoDto);
+
+        [HttpPatch]
+        [Route("{id:int}")]
+        // Limitação: case sensitive + build warnings
+        public async Task<Todo> Update([FromRoute] int id, [FromBody] Delta<TodoDTO> todoPatch) =>
+            await _todoService.UpdateTodo(id, todoPatch);
+            
+        // Limitação: json complexo
+        // public async Task<Todo> Update([FromRoute] int id, [FromBody] JsonPatchDocument<TodoDTO> todoPatch) =>
+        //     await _todoService.UpdateTodo(id, todoPatch);
 
         [HttpDelete]
         [Route("{id:int}")]

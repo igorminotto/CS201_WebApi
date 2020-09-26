@@ -22,22 +22,26 @@ namespace CS201_WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(TodoService));
-            services.AddSingleton(typeof(TodoRepository));
-            services.AddTransient(typeof(TodoContext));
+            services
+                .AddSingleton(typeof(TodoService))
+                .AddSingleton(typeof(TodoRepository))
+                .AddTransient(typeof(TodoContext));
 
-            services.AddControllers(options => 
-            {
-                options.Conventions.Add(new KebabCaseRoutesConvention());
-                options.Filters.Add(new HttpResponseExceptionFilter());
-            });
+            services
+                .AddControllers(options => 
+                {
+                    options.Conventions.Add(new KebabCaseRoutesConvention());
+                    options.Filters.Add(new HttpResponseExceptionFilter());
+                })
+                .AddNewtonsoftJson();
 
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
-            { 
-                Title = "CS201 WebApi",
-                Version = "v1",
-                Description = "Simple example of an WebApi created with ASP.NET Core"
-            }));
+            services
+                .AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
+                { 
+                    Title = "CS201 WebApi",
+                    Version = "v1",
+                    Description = "Simple example of an WebApi created with ASP.NET Core"
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -26,6 +26,7 @@ namespace CS201_WebApi.Infra.Http
             {
                 StatusCode = statusCode,
                 Message = exception.Message,
+                Trace = exception.StackTrace,
             })
             {
                 StatusCode = (int)statusCode,

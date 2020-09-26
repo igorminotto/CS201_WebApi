@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace CS201_WebApi.Features.Todo
 {
@@ -28,6 +30,24 @@ namespace CS201_WebApi.Features.Todo
         public async Task<Todo> UpdateTodo(int id, TodoDTO todoDTO)
         {
             var todo = await GetTodo(id);
+            todo.UpdateFields(todoDTO);
+            return await UpdateTodo(todo);
+        }
+
+        public async Task<Todo> UpdateTodo(int id, JsonPatchDocument<TodoDTO> todoPatch)
+        {
+            var todo = await GetTodo(id);
+            var todoDTO = todo.ToDTO();
+            todoPatch.ApplyTo(todoDTO);
+            todo.UpdateFields(todoDTO);
+            return await UpdateTodo(todo);
+        }
+
+        public async Task<Todo> UpdateTodo(int id, Delta<TodoDTO> todoPatch)
+        {
+            var todo = await GetTodo(id);
+            var todoDTO = todo.ToDTO();
+            todoPatch.Patch(todoDTO);
             todo.UpdateFields(todoDTO);
             return await UpdateTodo(todo);
         }

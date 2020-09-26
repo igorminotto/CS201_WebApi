@@ -23,6 +23,13 @@ namespace CS201_WebApi.Features.Todo
             return todo;
         } 
 
+        public TodoDTO ToDTO() => new TodoDTO
+        {
+            Title = Title,
+            Content = Content,
+            IsDone = IsDone,
+        };
+
         public void UpdateFields(TodoDTO todoDTO)
         {
             Title = todoDTO.Title;
