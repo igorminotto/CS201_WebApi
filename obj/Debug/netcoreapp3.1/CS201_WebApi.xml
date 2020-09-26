@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CS201_WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.GetAll">
+            <summary>
+            Gets all TodoItems.
+            </summary>
+        </member>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.Get(System.Int32)">
+            <summary>
+            Gets a specific TodoItem.
+            </summary>
+            <param name="id"></param>  
+        </member>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.Insert(CS201_WebApi.Features.Todo.TodoDTO)">
+            <summary>
+            Creates a TodoItems.
+            </summary>
+        </member>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.Update(System.Int32,CS201_WebApi.Features.Todo.TodoDTO)">
+            <summary>
+            Updates a TodoItem.
+            </summary>
+            <param name="id"></param>  
+        </member>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.Update(System.Int32,Microsoft.AspNet.OData.Delta{CS201_WebApi.Features.Todo.TodoDTO})">
+             <summary>
+             Updates some fields of a TodoItem.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Patch /Todo/:id
+                 {
+                    "Title": "Test",
+                 }
+            
+             </remarks>
+             <param name="id"></param>  
+        </member>
+        <member name="M:CS201_WebApi.Features.Todo.TodoController.Delete(System.Int32)">
+            <summary>
+            Deletes a specific TodoItem.
+            </summary>
+            <param name="id"></param>  
+        </member>
+    </members>
+</doc>

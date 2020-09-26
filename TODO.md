@@ -1,8 +1,9 @@
 ## Pendentes
 
-- PATCH action
-- config | database string variable
-- bind database to docker
+- Model validation
+  - ModelState ?
+- Config | database string variable
+- Bind database to docker
 
 ## Arquivo
 

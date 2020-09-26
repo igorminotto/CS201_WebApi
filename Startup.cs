@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using CS201_WebApi.Extensions;
 using CS201_WebApi.Features.Todo;
 using CS201_WebApi.Infra.Http;
@@ -36,12 +39,19 @@ namespace CS201_WebApi
                 .AddNewtonsoftJson();
 
             services
-                .AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
-                { 
-                    Title = "CS201 WebApi",
-                    Version = "v1",
-                    Description = "Simple example of an WebApi created with ASP.NET Core"
-                }));
+                .AddSwaggerGen(c => 
+                {
+                    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
+                    { 
+                        Title = "CS201 WebApi",
+                        Version = "v1",
+                        Description = "Simple example of an WebApi created with ASP.NET Core"
+                    });
+
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    c.IncludeXmlComments(xmlPath);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
