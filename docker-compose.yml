@@ -3,8 +3,12 @@ version: '2.0'
 services:
   api:
     build: .
+    environment: 
+      - "Database=Server=sqlserver,1433;Database=todos;User=sa;Password=4dbUi4Cz"
+    links:
+      - sqlserver:sqlserver
     ports:
-        - "5000:80"
+      - 5000:80
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment: 

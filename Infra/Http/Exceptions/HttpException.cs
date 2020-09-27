@@ -22,4 +22,10 @@ namespace CS201_WebApi.Infra.Http.Exceptions
         public NotFoundException(string message = "Not found.", Exception innerException = null)
             : base(HttpStatusCode.NotFound, message, innerException) {}
     }
+
+    public class BadRequestException : HttpException
+    {
+        public BadRequestException(string message = "Invalid.", Exception innerException = null)
+            : base(HttpStatusCode.BadRequest, message, innerException) { }
+    }
 }

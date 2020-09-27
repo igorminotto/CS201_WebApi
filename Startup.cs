@@ -4,6 +4,7 @@ using System.Reflection;
 using CS201_WebApi.Extensions;
 using CS201_WebApi.Features.Todo;
 using CS201_WebApi.Infra.Http;
+using CS201_WebApi.Infra.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -34,8 +35,10 @@ namespace CS201_WebApi
                 .AddControllers(options => 
                 {
                     options.Conventions.Add(new KebabCaseRoutesConvention());
+                    // options.Filters.Add(new ValidateModelFilter());
                     options.Filters.Add(new HttpResponseExceptionFilter());
                 })
+                // For PATCH action with JsonPatchDocument:
                 .AddNewtonsoftJson();
 
             services
@@ -48,6 +51,7 @@ namespace CS201_WebApi
                         Description = "Simple example of an WebApi created with ASP.NET Core"
                     });
 
+                    // For XML comments for detailing of controllers and routes:
                     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                     c.IncludeXmlComments(xmlPath);
@@ -63,6 +67,7 @@ namespace CS201_WebApi
             app.UseHttpsRedirection()
                 .UseRouting()
                 .UseAuthorization()
+                .UseMiddleware<RequestLoggingMiddleware>()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();

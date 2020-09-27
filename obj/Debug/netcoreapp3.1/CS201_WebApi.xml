@@ -24,6 +24,7 @@
             <summary>
             Updates a TodoItem.
             </summary>
+            <body>TodoDTO</body>
             <param name="id"></param>  
         </member>
         <member name="M:CS201_WebApi.Features.Todo.TodoController.Update(System.Int32,Microsoft.AspNet.OData.Delta{CS201_WebApi.Features.Todo.TodoDTO})">

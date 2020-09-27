@@ -10,12 +10,10 @@ namespace CS201_WebApi.Features.Todo
     [Route("[controller]")]
     public class TodoController : ControllerBase
     {
-        private readonly ILogger<TodoController> _logger;
         private readonly TodoService _todoService;
 
-        public TodoController(ILogger<TodoController> logger, TodoService todoService)
+        public TodoController(TodoService todoService)
         {
-            _logger = logger;
             _todoService = todoService;
         }
 
@@ -43,6 +41,7 @@ namespace CS201_WebApi.Features.Todo
         /// <summary>
         /// Updates a TodoItem.
         /// </summary>
+        /// <body>TodoDTO</body>
         /// <param name="id"></param>  
         [HttpPut]
         [Route("{id:int}")]
