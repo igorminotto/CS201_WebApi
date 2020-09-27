@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CS201_WebApi.Infra.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace CS201_WebApi.Features.Todo
 {
@@ -10,5 +14,11 @@ namespace CS201_WebApi.Features.Todo
         {
             _todoContext = todoContext;
         }
+
+        public override async Task<IEnumerable<Todo>> GetAll() => await Entities
+            .AsNoTracking()
+            .Include(t => t.User)
+            .OrderBy(t => t.CreateDate)
+            .ToListAsync();
     }
 }

@@ -9,8 +9,8 @@
 
 ## EntityFramework
 
-- dotnet ef database update --context=<ContextClass>
 - dotnet ef migrations add <MigrationName> --context=<ContextClass>
+- dotnet ef database update --context=<ContextClass>
 
 ## Executando
 

@@ -3,11 +3,13 @@ using System.IO;
 using System.Reflection;
 using CS201_WebApi.Extensions;
 using CS201_WebApi.Features.Todo;
+using CS201_WebApi.Features.User;
 using CS201_WebApi.Infra.Http;
 using CS201_WebApi.Infra.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,10 +28,19 @@ namespace CS201_WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Action<DbContextOptionsBuilder> defaultContextConfig = optionsBuilder =>
+            {
+                optionsBuilder.UseSqlServer(Configuration["database"], sqlServerOptionsBuilder => 
+                {
+                    sqlServerOptionsBuilder.CommandTimeout(1000);
+                });
+            };
+
             services
-                .AddSingleton(typeof(TodoService))
-                .AddSingleton(typeof(TodoRepository))
-                .AddTransient(typeof(TodoContext));
+                .AddScoped(typeof(TodoService))
+                .AddScoped(typeof(TodoRepository))
+                .AddDbContextPool<TodoContext>(defaultContextConfig)
+                .AddDbContextPool<UserContext>(defaultContextConfig);
 
             services
                 .AddControllers(options => 

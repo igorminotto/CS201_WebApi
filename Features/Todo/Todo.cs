@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using CS201_WebApi.Infra.Database;
 
@@ -14,6 +13,9 @@ namespace CS201_WebApi.Features.Todo
 
         [Required]
         public bool IsDone { get; set; } = false;
+
+        [Required]
+        public User.User User { get; set; }
 
         public static Todo FromDTO(TodoDTO todoDTO)
         {

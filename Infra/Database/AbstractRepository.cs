@@ -19,6 +19,7 @@ namespace CS201_WebApi.Infra.Database
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAll() => await Entities
+            .AsNoTracking()
             .OrderBy(t => t.CreateDate)
             .ToListAsync();
 
@@ -28,7 +29,7 @@ namespace CS201_WebApi.Infra.Database
         {
             try
             {
-                return await Entities.SingleAsync(predicate);
+                return await Entities.AsNoTracking().SingleAsync(predicate);
             }
             catch (System.InvalidOperationException e)
             {
