@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -17,24 +18,41 @@ namespace CS201_WebApi.Infra.Logging
 
         public async Task Invoke(HttpContext context)
         {
-            var logger = _loggerFactory.CreateLogger(context.GetEndpoint().DisplayName);
+            var displayName = context?.GetEndpoint()?.DisplayName ?? "RequestLogging";
+            var logger = _loggerFactory.CreateLogger(displayName);
+            var method =  context.Request.Method;
+            var url = context.Request.Path.Value;
+            var originalBody = context.Response.Body;
+            string responseBody = "";
 
             try
             {
-                logger.LogInformation(
-                    "Request {method} {url}",
-                    context.Request?.Method,
-                    context.Request?.Path.Value);
+                using (var memStream = new MemoryStream()) 
+                {
+                    context.Response.Body = memStream;
 
-                await _next(context);
+                    logger.LogInformation($"Request {method} {url}");
+
+                    await _next(context);
+
+                    // Rewind memory stream
+                    memStream.Position = 0;
+                    // Read stream as a string
+                    responseBody = new StreamReader(memStream).ReadToEnd();
+
+                    // Rewind memory stream
+                    memStream.Position = 0;
+                    // Copy memory stream to original stream
+                    await memStream.CopyToAsync(originalBody);
+                }
             }
             finally
             {
-                logger.LogInformation(
-                    "Request {method} {url} => {statusCode}",
-                    context.Request?.Method,
-                    context.Request?.Path.Value,
-                    context.Response?.StatusCode);
+                var statusCode = context.Response?.StatusCode;
+                
+                logger.LogInformation($"Request {method} {url} => {statusCode} : {responseBody}");
+                
+                context.Response.Body = originalBody;
             }
         }
     }
